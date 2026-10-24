@@ -29,7 +29,7 @@ jobs:
           context: ./WaterPurifierBackend
           file: ./WaterPurifierBackend/backend.Dockerfile
           push: true
-          tags: ${{ secrets.DOCKERHUB_USERNAME }}/docker-git-actions-backend:latest
+          tags: ${{ secrets.DOCKERHUB_USERNAME }}/docker-backend-2400031518:latest
 
       - name: Build and push frontend image
         uses: docker/build-push-action@v5
@@ -37,4 +37,4 @@ jobs:
           context: ./WaterPurifierFrontend
           file: ./WaterPurifierFrontend/frontend.Dockerfile
           push: true
-          tags: ${{ secrets.DOCKERHUB_USERNAME }}/docker-git-actions-frontend:latest
+          tags: ${{ secrets.DOCKERHUB_USERNAME }}/docker-frontend-2400031518:latest
