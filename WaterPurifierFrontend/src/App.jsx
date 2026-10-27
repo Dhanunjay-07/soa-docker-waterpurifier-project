@@ -2,6 +2,7 @@ import { useCallback, useEffect, useMemo, useState } from 'react'
 import { Check, ChevronDown, Droplets, LoaderCircle, Pencil, Plus, Search, Trash2, X } from 'lucide-react'
 
 const blankForm = { brand: '', modelName: '', price: '', installed: '' }
+const API_BASE_URL = (import.meta.env.VITE_API_BASE_URL || (import.meta.env.DEV ? 'http://localhost:8001' : 'http://localhost:2025')).replace(/\/$/, '')
 
 function App() {
   const [page, setPage] = useState('dashboard')
@@ -18,7 +19,7 @@ function App() {
   const loadPurifiers = useCallback(async () => {
     setLoading(true)
     try {
-      const response = await fetch('/waterpurifier/displayall')
+      const response = await fetch(`${API_BASE_URL}/waterpurifier/displayall`)
       if (!response.ok) throw new Error('Unable to load purifier records.')
       setPurifiers(await response.json())
       setMessage({ type: '', text: '' })
@@ -68,7 +69,7 @@ function App() {
     setSaving(true)
     try {
       const payload = { brand: form.brand.trim(), modelName: form.modelName.trim(), price: Number(form.price), installed: form.installed === 'true' }
-      const response = await fetch(editingId ? `/waterpurifier/updatebyid/${editingId}` : '/waterpurifier/add', {
+      const response = await fetch(editingId ? `${API_BASE_URL}/waterpurifier/updatebyid/${editingId}` : `${API_BASE_URL}/waterpurifier/add`, {
         method: editingId ? 'PUT' : 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(payload),
@@ -95,7 +96,7 @@ function App() {
   async function remove(item) {
     if (!window.confirm(`Delete ${item.brand} ${item.modelName}?`)) return
     try {
-      const response = await fetch(`/waterpurifier/deletebyid/${item.id}`, { method: 'DELETE' })
+      const response = await fetch(`${API_BASE_URL}/waterpurifier/deletebyid/${item.id}`, { method: 'DELETE' })
       if (!response.ok) throw new Error('Unable to delete this purifier.')
       setMessage({ type: 'success', text: 'Purifier deleted successfully.' })
       await loadPurifiers()

@@ -14,6 +14,9 @@ services:
       - springboot-postgres-net
 
   backend:
+    build:
+      context: ./WaterPurifierBackend
+      dockerfile: backend.Dockerfile
     image: dhanunjay07/docker-backend-2400031518:latest
     container_name: docker-springboot
     ports:
@@ -25,6 +28,9 @@ services:
       - springboot-postgres-net
 
   frontend:
+    build:
+      context: ./WaterPurifierFrontend
+      dockerfile: frontend.Dockerfile
     image: dhanunjay07/docker-frontend-2400031518:latest
     container_name: docker-react
     ports:
