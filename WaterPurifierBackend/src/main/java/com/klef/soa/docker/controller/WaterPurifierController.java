@@ -17,6 +17,8 @@ import org.springframework.web.bind.annotation.RestController;
 import com.klef.soa.docker.dto.WaterPurifierRequest;
 import com.klef.soa.docker.dto.WaterPurifierResponse;
 import com.klef.soa.docker.service.WaterPurifierService;
+import org.springframework.web.bind.annotation.RequestParam;
+
 
 @RestController
 @RequestMapping("/waterpurifier")
@@ -26,6 +28,13 @@ public class WaterPurifierController {
 	@Autowired
 	private WaterPurifierService service;
 
+	@GetMapping("/")
+	public String test()
+	
+	{
+		return "Water Purifier Docker Project ";
+	}
+	
 	@PostMapping("/add")
 	public WaterPurifierResponse addWaterPurifier(@RequestBody WaterPurifierRequest request) {
 		return service.addWaterPurifier(request);
